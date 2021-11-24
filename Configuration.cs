@@ -11,7 +11,7 @@ namespace Tms.Identity
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("TmsWebAPI", "Web API")
+                new ApiScope("TmsWebApi", "Web API")
             };
 
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -24,9 +24,10 @@ namespace Tms.Identity
         public static IEnumerable<ApiResource> ApiResources =>
             new List<ApiResource>
             {
-                new ApiResource("TmsWebAPI", "Web API", new[]{JwtClaimTypes.Name})
+                new ApiResource("TmsWebApi", "Web API", new[]
+                    {JwtClaimTypes.Name})
                 {
-                    Scopes = { "TmsWebAPI" }
+                    Scopes = { "TmsWebApi" }
                 }
             };
 
@@ -35,30 +36,20 @@ namespace Tms.Identity
             {
                 new Client
                 {
-                    ClientId = "notes-web-api",
-                    ClientName = "Notes Web",
-                    AllowedGrantTypes = GrantTypes.Code,
+                    ClientId = "client_id_js",
                     RequireClientSecret = false,
+                    RequireConsent = false,
                     RequirePkce = true,
-                    RedirectUris =
-                    {
-                        "http://.../signin-oidc"
-                    },
-                    AllowedCorsOrigins =
-                    {
-                        "http://..."
-                    },
-                    PostLogoutRedirectUris =
-                    {
-                        "http://.../signout-oidc"
-                    },
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RedirectUris ={"http://localhost:3000/signin-oidc"},
+                    AllowedCorsOrigins ={"http://localhost:3000"},
+                    PostLogoutRedirectUris = {"http://localhost:3000/signout-oidc"},
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "TmsWebAPI"
+                        "TmsWebApi"
                     },
-                    AllowAccessTokensViaBrowser = true
                 }
             };
     }

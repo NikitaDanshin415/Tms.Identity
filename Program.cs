@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Tms.Identity.Data;
 
 namespace Tms.Identity
@@ -16,7 +12,6 @@ namespace Tms.Identity
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
             using (var scope = host.Services.CreateScope())
             {
                 var serviceProvider = scope.ServiceProvider;
@@ -31,7 +26,6 @@ namespace Tms.Identity
                     logger.LogError(exception, "An eroor occurred while app initialization | Program.cs");
                 }
             }
-
             host.Run();
         }
 
