@@ -1,18 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
+using System.IO;
 using Tms.Identity.Data;
 using Tms.Identity.Models;
 
@@ -22,15 +16,13 @@ namespace Tms.Identity
     {
         public IConfiguration AppConfiguration { get; }
 
-        public Startup(IConfiguration configuration)
-        {
+        public Startup(IConfiguration configuration) =>
             AppConfiguration = configuration;
-        }
-
 
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = AppConfiguration.GetValue<string>("DbConnection");
+
             services.AddDbContext<AuthDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
@@ -56,17 +48,14 @@ namespace Tms.Identity
 
             services.ConfigureApplicationCookie(config =>
             {
-                config.Cookie.Name = "Tms.Identity";
+                config.Cookie.Name = "Tms.Identity.Cookie";
                 config.LoginPath = "/Auth/Login";
                 config.LogoutPath = "/Auth/Logout";
             });
+
             services.AddControllersWithViews();
-
-
-
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -79,8 +68,11 @@ namespace Tms.Identity
                     Path.Combine(env.ContentRootPath, "Styles")),
                 RequestPath = "/styles"
             });
+
             app.UseRouting();
+
             app.UseIdentityServer();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
