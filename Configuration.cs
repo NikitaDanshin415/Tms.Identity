@@ -41,9 +41,9 @@ namespace Tms.Identity
                     RequireConsent = false,
                     RequirePkce = true,
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris ={"http://localhost:3000/signin-oidc"},
+                    RedirectUris ={"http://localhost:3000/oidcLogin"},
                     AllowedCorsOrigins ={"http://localhost:3000"},
-                    PostLogoutRedirectUris = {"http://localhost:3000/signout-oidc"},
+                    PostLogoutRedirectUris = {"http://localhost:3000/"},
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
